@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,10 +9,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         /* Hide body initially to prevent flash */
-        body { visibility: hidden; }
-        body.show-content { visibility: visible; }
+        body {
+            visibility: hidden;
+        }
+
+        body.show-content {
+            visibility: visible;
+        }
     </style>
 </head>
+
 <body class="app-page">
     <!-- Theme Toggle Button -->
     <button class="theme-toggle" id="themeToggle" title="Toggle theme">
@@ -21,7 +28,8 @@
         <!-- Header -->
         <header class="app-header">
             <div class="header-left">
-                <h1>My Todo App</h1>
+                <h1>Taskflow</h1>
+                <h2 class="subheading">Your to-do list manager</h2>
             </div>
             <div class="header-right">
                 <div class="user-info">
@@ -39,7 +47,7 @@
 
         <!-- Task Stages Navigation -->
         <div class="task-stages">
-            <button class="stage-tab active" data-stage="todo" id="todoTab">
+            <button class="stage-tab" data-stage="todo" id="todoTab">
                 Todo (<span id="todoCount">0</span>)
             </button>
             <button class="stage-tab" data-stage="completed" id="completedTab">
@@ -69,4 +77,5 @@
 
     <script src="app.js"></script>
 </body>
+
 </html>

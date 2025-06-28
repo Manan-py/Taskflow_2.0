@@ -1,70 +1,77 @@
-# TaskFlow - Personal Productivity Todo Application
+# TaskFlow Todo Application
 
 ## Overview
-TaskFlow is a client-side todo application built with vanilla HTML, CSS, and JavaScript. It requires no backend server and can run directly in any web browser.
 
-## Features
-- Age verification (must be over 10 years old)
-- Three-stage task management: Todo, Completed, Archived
-- Task creation, completion, archiving, and deletion with undo
-- Unarchive functionality to restore archived tasks
-- Local storage persistence
-- Responsive design with smooth animations
-- Professional dark theme with gradient styling
+TaskFlow is a client-side todo application built with vanilla HTML, CSS, and JavaScript. It features age verification for user access and provides a comprehensive task management system with multiple task stages (todo, completed, archived). The application uses local storage for data persistence and includes a modern, responsive design with gradient backgrounds and professional styling.
 
-## Running the Application
+## System Architecture
 
-### Option 1: Direct Browser Access
-Simply open `index.html` in any modern web browser. No server required!
+### Frontend Architecture
 
-### Option 2: Local HTTP Server (Optional)
-For development or if you prefer a local server:
+- **Technology Stack**: Vanilla HTML5, CSS3, JavaScript (ES6+)
+- **Architecture Pattern**: Pure client-side application with multiple HTML pages
+- **State Management**: JavaScript classes with local state and localStorage persistence
+- **Styling**: Custom CSS with gradient themes, FontAwesome icons, smooth animations, and responsive design
+- **No Server Required**: Runs directly in browser, can be served as static files
 
-**Using Python:**
-```bash
-# Python 3
-python -m http.server 8000
+## Key Components
 
-# Python 2
-python -m SimpleHTTPServer 8000
-```
+### 1. Landing Page (index.html)
 
-**Using Node.js:**
-```bash
-npx serve .
-```
+- **Purpose**: Age verification and user onboarding
+- **Features**: Form validation, date of birth verification, localStorage user creation
+- **JavaScript Class**: `AgeVerification`
 
-**Using any other static file server of your choice**
+### 2. Main Application (app.html)
 
-## File Structure
+- **Purpose**: Core todo functionality
+- **Features**: Task management, stage switching, user profile display
+- **JavaScript Class**: `TaskFlowApp`
+
+### 3. Styling System (styles.css)
+
+- **Design**: Modern gradient-based theme with professional appearance
+- **Responsive**: Mobile-first approach with flexible layouts
+- **Icons**: FontAwesome integration for enhanced UI
+
+## Data Flow
+
+### User Authentication Flow
+
+1. User accesses landing page (index.html)
+2. Age verification form validates user input
+3. User data stored in localStorage upon successful verification
+4. Automatic redirect to main application
+5. Main app checks localStorage for existing user session
+
+### Task Management Flow
+
+1. Tasks created through form input
+2. Tasks stored in memory with localStorage backup
+3. Tasks categorized into three stages: todo, completed, archived
+4. Real-time counter updates for each stage
+5. Stage switching updates UI without page reload
+
+## External Dependencies
+
+### CDN Resources
+
+- **FontAwesome 6.0.0**: Icon library for UI enhancement
+- **Source**: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css`
+
+### Browser APIs
+
+- **localStorage**: For data persistence across sessions
+- **Date API**: For age verification calculations
+- **DOM API**: For dynamic content manipulation
+
+### File Structure
+
 ```
 /
-├── index.html          # Landing page with age verification
-├── app.html           # Main todo application
-├── script.js          # Age verification logic
-├── app.js             # Main application logic
-├── styles.css         # All styling and animations
-└── README.md          # This file
+├── index.html (Landing page)
+├── app.html (Main application)
+├── script.js (Age verification logic)
+├── app.js (Main application logic)
+└── styles.css (Unified styling)
 ```
-
-## Dependencies
-- **External**: FontAwesome 6.0.0 (loaded via CDN)
-- **Browser APIs**: localStorage, Date API, DOM API
-- **No Build Process**: Ready to run as-is
-
-## Deployment
-This application can be deployed to any static hosting service:
-- GitHub Pages
-- Netlify
-- Vercel
-- Surge.sh
-- Any web hosting provider
-
-Simply upload all files to your hosting service and the app will work immediately.
-
-## Browser Compatibility
-Works in all modern browsers that support:
-- ES6+ JavaScript features
-- CSS Grid and Flexbox
-- Local Storage API
-- CSS animations and transitions

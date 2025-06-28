@@ -7,11 +7,11 @@
 /* CSS Variables for Theme Support */
 :root {
     /* Dark Theme (Default) */
-    --bg-primary: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
-    --bg-secondary: rgba(255, 255, 255, 0.05);
+    --bg-primary: linear-gradient(135deg, #232121 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+    --bg-secondary: rgba(255, 255, 255, 0.3);
     --bg-card: rgba(255, 255, 255, 0.1);
     --text-primary: #ffffff;
-    --text-secondary: rgba(255, 255, 255, 0.7);
+    --text-secondary: rgba(255, 255, 255, 0.788);
     --accent-color: #7B68EE;
     --success-color: #4CAF50;
     --error-color: #f44336;
@@ -24,11 +24,11 @@
 
 /* Light Theme */
 body.light-theme {
-    --bg-primary: linear-gradient(135deg, #ffffff 0%, #f8f9fa 25%, #e9ecef 50%, #dee2e6 75%, #ced4da 100%);
+    --bg-primary: linear-gradient(135deg, #fffffff4 0%, #f8f9fa 25%, #bed9f3 50%, #b2d4f7 75%, #8cbded 100%);
     --bg-secondary: rgba(0, 0, 0, 0.03);
     --bg-card: rgba(248, 249, 250, 0.95);
-    --text-primary: #1a202c;
-    --text-secondary: #4a5568;
+    --text-primary: #121315;
+    --text-secondary: #121315;
     --accent-color: #3182ce;
     --success-color: #38a169;
     --error-color: #e53e3e;
@@ -125,6 +125,71 @@ body.light-theme .sign-out-btn:hover {
     color: var(--text-primary);
 }
 
+/* Light Theme Empty State Overrides */
+body.light-theme .empty-state {
+    color: #64748b;
+}
+
+body.light-theme .empty-state i {
+    color: #475569;
+    opacity: 0.7;
+}
+
+body.light-theme .empty-state h3 {
+    color: #334155;
+}
+
+body.light-theme .empty-state p {
+    color: #64748b;
+}
+
+/* Light Theme Stage Tab Text Overrides */
+body.light-theme .stage-tab {
+    color: #000000;
+}
+
+body.light-theme .stage-tab:not(.active):hover {
+    color: #000000;
+}
+
+/* Light Theme ge-tab Text Overrides */
+body.light-theme .ge-tab {
+    color: #000000;
+}
+
+body.light-theme .ge-tab:not(.active):hover {
+    color: #000000;
+}
+
+/* Light Theme acstative Overrides */
+body.light-theme .ge-tab.acstative {
+    background: var(--accent-color);
+    color: white;
+}
+
+body.light-theme .stage-tab.acstative {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* Dark Theme Empty State Overrides */
+.empty-state {
+    color: #cbd5e1;
+}
+
+.empty-state i {
+    color: #e2e8f0;
+    opacity: 0.8;
+}
+
+.empty-state h3 {
+    color: #f1f5f9;
+}
+
+.empty-state p {
+    color: #cbd5e1;
+}
+
 /* Global smooth scrolling */
 html {
     scroll-behavior: smooth;
@@ -161,12 +226,6 @@ body {
     background: 
         radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.15) 0%, transparent 40%),
         radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.15) 0%, transparent 40%);
-    animation: backgroundPulse 8s ease-in-out infinite;
-}
-
-@keyframes backgroundPulse {
-    0%, 100% { opacity: 0.7; }
-    50% { opacity: 1; }
 }
 
 .container {
@@ -381,14 +440,8 @@ body {
     background: 
         radial-gradient(circle at 30% 70%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
         radial-gradient(circle at 70% 30%, rgba(255, 119, 198, 0.05) 0%, transparent 50%);
-    animation: backgroundFloat 10s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
-}
-
-@keyframes backgroundFloat {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-10px) rotate(1deg); }
 }
 
 .app-container {
@@ -411,6 +464,18 @@ body {
 .header-left h1 {
     font-size: 1.8rem;
     color: var(--text-primary);
+}
+
+.header-left .subheading {
+    font-size: 0.85rem;
+    font-family: 'Brush Script MT', cursive, serif;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin-top: -8px;
+    margin-bottom: 0;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+    transform: translateY(-2px);
 }
 
 .header-right {
@@ -475,6 +540,7 @@ body {
     top: 0;
     z-index: 100;
     box-shadow: 0 4px 20px var(--shadow);
+    width: 100%;
 }
 
 .stage-tab {
@@ -489,6 +555,9 @@ body {
     font-weight: 500;
     position: relative;
     overflow: hidden;
+    min-width: 0;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .stage-tab::before {
@@ -507,8 +576,8 @@ body {
 }
 
 .stage-tab.active {
-    background: var(--text-primary);
-    color: var(--bg-primary);
+    background: var(--accent-color);
+    color: white;
     transform: scale(1.02);
     box-shadow: 0 4px 12px var(--shadow);
 }
@@ -517,6 +586,67 @@ body {
     background: var(--bg-secondary);
     color: var(--text-primary);
     transform: translateY(-1px);
+}
+
+/* Ensure ge-tab has same styling as stage-tab */
+.ge-tab {
+    flex: 1;
+    padding: 12px 16px;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+    min-width: 0;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ge-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.ge-tab:hover::before {
+    left: 100%;
+}
+
+.ge-tab.active {
+    background: var(--accent-color);
+    color: white;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.ge-tab:not(.active):hover {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+/* Handle the acstative class (typo for active) */
+.ge-tab.acstative {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px var(--shadow);
+}
+
+.stage-tab.acstative {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px var(--shadow);
 }
 
 .task-input-section {
@@ -533,15 +663,16 @@ body {
 }
 
 .task-form input {
-    flex: 1;
+    flex: 6;
     padding: 14px 16px;
-    background: var(--bg-secondary);
+    background: rgba(255, 255, 255, 0.95);
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    color: var(--text-primary);
+    color: #000000;
     font-size: 1rem;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     transform: scale(1);
+    min-width: 0;
 }
 
 .task-form input:focus {
@@ -549,14 +680,16 @@ body {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
     transform: scale(1.01);
-    background: var(--bg-card);
+    background: rgba(248, 248, 248, 0.95);
 }
 
 .task-form input::placeholder {
-    color: var(--text-secondary);
+    color: rgba(148, 163, 184, 0.5);
+    opacity: 0.9;
 }
 
 .submit-btn {
+    flex: 1;
     padding: 14px 24px;
     background: linear-gradient(135deg, #3b82f6, #1e40af);
     border: none;
@@ -565,6 +698,8 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
+    min-width: fit-content;
 }
 
 .submit-btn:hover {
@@ -791,7 +926,7 @@ body {
 .message-container {
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: 80px;
     z-index: 1000;
     transition: all 0.3s ease;
 }
@@ -1000,6 +1135,32 @@ body {
         font-size: 0.9rem;
         padding: 10px 12px;
     }
+    
+    /* Theme toggle positioning for mobile */
+    .theme-toggle {
+        top: 10px;
+        right: 10px;
+        width: 45px;
+        height: 45px;
+    }
+    
+    /* Task item padding for mobile */
+    .task-item {
+        padding: 20px;
+    }
+    
+    /* Empty state responsiveness */
+    .empty-state {
+        padding: 40px 20px;
+    }
+    
+    .empty-state i {
+        font-size: 2.5rem;
+    }
+    
+    .empty-state h3 {
+        font-size: 1.1rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1026,4 +1187,154 @@ body {
     .undo-btn {
         align-self: flex-end;
     }
+    
+    /* Smaller theme toggle for very small screens */
+    .theme-toggle {
+        width: 40px;
+        height: 40px;
+        top: 8px;
+        right: 8px;
+    }
+    
+    .theme-toggle i {
+        font-size: 16px;
+    }
+    
+    /* Compact task items for mobile */
+    .task-item {
+        padding: 16px;
+    }
+    
+    /* Smaller stage tabs for mobile */
+    .stage-tab {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
+    
+    /* Compact form for mobile */
+    .task-form {
+        padding: 16px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .task-form input {
+        padding: 12px 14px;
+        flex: none;
+        width: 100%;
+    }
+    
+    .submit-btn {
+        padding: 12px 20px;
+        flex: none;
+        width: 100%;
+    }
+    
+    /* Compact empty state for mobile */
+    .empty-state {
+        padding: 30px 16px;
+    }
+    
+    .empty-state i {
+        font-size: 2rem;
+    }
+    
+    .empty-state h3 {
+        font-size: 1rem;
+    }
+    
+    .empty-state p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Large screen optimization */
+@media (min-width: 1200px) {
+    .app-container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .task-item {
+        margin-bottom: 16px;
+    }
+}
+
+/* Light Theme Landing Page Overrides */
+body.light-theme .landing-page::before {
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(49, 130, 206, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 75% 75%, rgba(56, 161, 105, 0.08) 0%, transparent 40%);
+}
+
+body.light-theme .logo h1 {
+    background: linear-gradient(135deg, #1e293b, #475569);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.light-theme .tagline {
+    color: #64748b;
+}
+
+body.light-theme .age-notice {
+    background: rgba(49, 130, 206, 0.1);
+    border: 1px solid rgba(49, 130, 206, 0.2);
+    color: #2563eb;
+}
+
+body.light-theme .verification-form {
+    background: rgba(248, 249, 250, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+}
+
+body.light-theme .verification-form h2 {
+    color: #1e293b;
+}
+
+body.light-theme .form-group label {
+    color: #475569;
+}
+
+body.light-theme .form-group input {
+    background: rgba(248, 249, 250, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: #1e293b;
+}
+
+body.light-theme .form-group input:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+}
+
+body.light-theme .form-group input::placeholder {
+    color: rgba(100, 116, 139, 0.8);
+    opacity: 0.6;
+}
+
+body.light-theme .verify-btn {
+    background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+body.light-theme .verify-btn:hover {
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.3);
+}
+
+body.light-theme .terms-notice {
+    color: #64748b;
+}
+
+body.light-theme .terms-link {
+    color: #2563eb;
+}
+
+body.light-theme .terms-link:hover {
+    color: #1d4ed8;
+}
+
+body.light-theme .task-form input::placeholder {
+    color: rgba(100, 116, 139, 0.8);
+    opacity: 0.6;
 }

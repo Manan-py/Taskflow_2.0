@@ -1,4 +1,20 @@
 // Landing page JavaScript for age verification
+
+// Check splash screen immediately before DOM loads to prevent flash
+(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const fromSplash = urlParams.get('from') === 'splash';
+    const lastSplash = localStorage.getItem('taskflow_last_splash');
+    const now = Date.now();
+    
+    // Show splash if: not from splash AND (no previous splash OR more than 30 seconds ago)
+    if (!fromSplash && (!lastSplash || now - parseInt(lastSplash) > 30000)) {
+        localStorage.setItem('taskflow_last_splash', now.toString());
+        window.location.href = 'splash.html';
+        return;
+    }
+})();
+
 class AgeVerification {
     constructor() {
         this.form = document.getElementById('ageVerificationForm');
@@ -13,9 +29,6 @@ class AgeVerification {
     }
     
     init() {
-        // Check if we should show splash screen
-        this.checkSplashScreen();
-        
         // Check if user is already verified on page load
         this.checkExistingUser();
         
@@ -31,21 +44,7 @@ class AgeVerification {
         this.dobInput.addEventListener('input', () => this.clearError('dob'));
     }
     
-    checkSplashScreen() {
-        // Check if we came from splash screen or should show it
-        const urlParams = new URLSearchParams(window.location.search);
-        const fromSplash = urlParams.get('from') === 'splash';
-        const lastSplash = localStorage.getItem('taskflow_last_splash');
-        const now = Date.now();
-        
-        // Show splash if: not from splash AND (no previous splash OR more than 30 seconds ago)
-        if (!fromSplash && (!lastSplash || now - parseInt(lastSplash) > 30000)) {
-            localStorage.setItem('taskflow_last_splash', now.toString());
-            window.location.href = 'splash.html';
-            return;
-        }
-    }
-    
+
     checkExistingUser() {
         try {
             const userData = localStorage.getItem('taskflow_user');

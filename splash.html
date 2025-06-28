@@ -14,11 +14,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(120, 119, 255, 0.3) 0%, transparent 50%),
-                linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
             min-height: 100vh;
             color: #ffffff;
             overflow: hidden;
@@ -26,6 +22,8 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            margin: 0;
+            padding: 0;
         }
 
         /* Floating particles background */
@@ -272,14 +270,32 @@
     </div>
 
     <script>
+        console.log('Splash screen loaded');
+        
+        // Add debug visibility
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM loaded');
+            const container = document.getElementById('splashContainer');
+            if (container) {
+                console.log('Container found');
+                container.style.visibility = 'visible';
+            } else {
+                console.log('Container not found');
+            }
+        });
+        
         // Auto-redirect after 2.5 seconds with exit animation
         setTimeout(() => {
+            console.log('Starting exit animation');
             const container = document.getElementById('splashContainer');
-            container.classList.add('splash-exit');
-            
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 800);
+            if (container) {
+                container.classList.add('splash-exit');
+                
+                setTimeout(() => {
+                    console.log('Redirecting to index.html');
+                    window.location.href = 'index.html';
+                }, 800);
+            }
         }, 2500);
     </script>
 </body>

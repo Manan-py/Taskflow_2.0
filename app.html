@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Todo App - TaskFlow</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="app-page">
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-left">
+                <h1>My Todo App</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span class="username" id="userName">keval</span>
+                    <div class="user-avatar" id="userAvatar">
+                        <span class="avatar-text">KE</span>
+                    </div>
+                </div>
+                <button class="sign-out-btn" id="signOutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Sign Out
+                </button>
+            </div>
+        </header>
+
+        <!-- Task Stages Navigation -->
+        <div class="task-stages">
+            <button class="stage-tab active" data-stage="todo" id="todoTab">
+                Todo (<span id="todoCount">0</span>)
+            </button>
+            <button class="stage-tab" data-stage="completed" id="completedTab">
+                Completed (<span id="completedCount">0</span>)
+            </button>
+            <button class="stage-tab" data-stage="archived" id="archivedTab">
+                Archived (<span id="archivedCount">0</span>)
+            </button>
+        </div>
+
+        <!-- Task Input -->
+        <div class="task-input-section">
+            <form id="taskForm" class="task-form">
+                <input type="text" id="taskInput" placeholder="Add your task (text-box)" required>
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+
+        <!-- Task List -->
+        <div class="task-list" id="taskList">
+            <!-- Tasks will be dynamically inserted here -->
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toastContainer" class="toast-container"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

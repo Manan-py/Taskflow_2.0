@@ -9,40 +9,7 @@ class AgeVerification {
         this.messageContainer = document.getElementById('messageContainer');
         this.messageContent = document.getElementById('messageContent');
         
-        this.initTheme();
         this.init();
-    }
-    
-    initTheme() {
-        // Initialize theme from localStorage or system preference
-        const savedTheme = localStorage.getItem('taskflow_theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
-        
-        document.documentElement.setAttribute('data-theme', theme);
-        
-        // Set up theme toggle
-        const themeToggle = document.getElementById('themeToggle');
-        if (themeToggle) {
-            themeToggle.addEventListener('click', () => this.toggleTheme());
-        }
-    }
-    
-    toggleTheme() {
-        const currentTheme = document.documentElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('taskflow_theme', newTheme);
-        
-        // Add a little animation to the bulb
-        const bulbIcon = document.querySelector('.bulb-icon');
-        if (bulbIcon) {
-            bulbIcon.style.transform = 'scale(1.3)';
-            setTimeout(() => {
-                bulbIcon.style.transform = '';
-            }, 200);
-        }
     }
     
     init() {

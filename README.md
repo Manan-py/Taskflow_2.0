@@ -65,13 +65,4 @@ TaskFlow is a client-side todo application built with vanilla HTML, CSS, and Jav
 - **Date API**: For age verification calculations
 - **DOM API**: For dynamic content manipulation
 
-### File Structure
 
-```
-/
-├── index.html (Landing page)
-├── app.html (Main application)
-├── script.js (Age verification logic)
-├── app.js (Main application logic)
-└── styles.css (Unified styling)
-```

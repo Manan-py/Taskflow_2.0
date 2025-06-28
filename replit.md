@@ -25,18 +25,25 @@ TaskFlow is a client-side todo application built with vanilla HTML, CSS, and Jav
 
 ### 1. Landing Page (index.html)
 - **Purpose**: Age verification and user onboarding
-- **Features**: Form validation, date of birth verification, localStorage user creation
+- **Features**: Form validation, date of birth verification, localStorage user creation, theme toggle
 - **JavaScript Class**: `AgeVerification`
 
 ### 2. Main Application (app.html)
 - **Purpose**: Core todo functionality
-- **Features**: Task management, stage switching, user profile display
+- **Features**: Task management, stage switching, user profile display, theme toggle
 - **JavaScript Class**: `TaskFlowApp`
 
 ### 3. Styling System (styles.css)
-- **Design**: Modern gradient-based theme with professional appearance
-- **Responsive**: Mobile-first approach with flexible layouts
-- **Icons**: FontAwesome integration for enhanced UI
+- **Design**: Dual-theme system (dark/light mode) with modern gradient backgrounds
+- **Theme System**: CSS variables for seamless theme switching with localStorage persistence
+- **Responsive**: Mobile-first approach with comprehensive breakpoints (768px, 480px)
+- **Icons**: FontAwesome integration for enhanced UI including animated lightbulb theme toggle
+
+### 4. Theme System
+- **Dark Mode**: Default gradient theme with purple/blue tones
+- **Light Mode**: Clean light theme with subtle gradients
+- **Toggle**: Animated lightbulb button in top-right corner of all pages
+- **Persistence**: User preference saved in localStorage across sessions
 
 ## Data Flow
 
@@ -57,13 +64,14 @@ TaskFlow is a client-side todo application built with vanilla HTML, CSS, and Jav
 ## External Dependencies
 
 ### CDN Resources
-- **FontAwesome 6.0.0**: Icon library for UI enhancement
+- **FontAwesome 6.0.0**: Icon library for UI enhancement including theme toggle bulb icon
 - **Source**: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css`
 
 ### Browser APIs
-- **localStorage**: For data persistence across sessions
+- **localStorage**: For data persistence (user data, tasks, theme preference)
 - **Date API**: For age verification calculations
 - **DOM API**: For dynamic content manipulation
+- **matchMedia API**: For detecting system dark/light mode preference
 
 ## Deployment Strategy
 
@@ -97,3 +105,6 @@ Changelog:
 - June 28, 2025. Made task stage navigation sticky for better UX while scrolling
 - June 28, 2025. Created animated splash screen with floating particles and loading animation that displays for 2.5 seconds before redirecting
 - June 28, 2025. Redesigned entire visual theme with dynamic gradient backgrounds, floating animations, enhanced logos, improved task cards with backdrop blur effects, and modern glass-morphism styling
+- June 28, 2025. Fixed splash screen to appear on every reload/navigation and properly redirect based on user authentication status
+- June 28, 2025. Added dark/light mode toggle with animated lightbulb icon in top-right corner of all pages, localStorage persistence, and CSS variables for seamless theme switching
+- June 28, 2025. Implemented comprehensive responsive design with mobile-first approach, optimized for all device sizes (desktop, tablet, mobile) with breakpoints at 768px and 480px

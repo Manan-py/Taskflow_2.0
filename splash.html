@@ -292,8 +292,24 @@
                 container.classList.add('splash-exit');
                 
                 setTimeout(() => {
+                    // Check if user is already verified
+                    const userData = localStorage.getItem('taskflow_user');
+                    if (userData) {
+                        try {
+                            const user = JSON.parse(userData);
+                            if (user.name && user.dateOfBirth && user.verified) {
+                                console.log('Redirecting to app.html');
+                                window.location.href = 'app.html?from=splash';
+                                return;
+                            }
+                        } catch (error) {
+                            console.log('Invalid user data, clearing');
+                            localStorage.removeItem('taskflow_user');
+                        }
+                    }
+                    
                     console.log('Redirecting to index.html');
-                    window.location.href = 'index.html';
+                    window.location.href = 'index.html?from=splash';
                 }, 800);
             }
         }, 2500);

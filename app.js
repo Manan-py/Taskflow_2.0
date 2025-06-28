@@ -39,6 +39,9 @@ class TaskFlowApp {
     }
     
     async init() {
+        // Check if we should show splash screen
+        this.checkSplashScreen();
+        
         // Check authentication
         if (!this.checkAuthentication()) {
             window.location.href = 'index.html';
@@ -57,6 +60,21 @@ class TaskFlowApp {
         // Render initial view
         this.renderTasks();
         this.updateCounters();
+    }
+    
+    checkSplashScreen() {
+        // Check if we came from splash screen or should show it
+        const urlParams = new URLSearchParams(window.location.search);
+        const fromSplash = urlParams.get('from') === 'splash';
+        const lastSplash = localStorage.getItem('taskflow_last_splash');
+        const now = Date.now();
+        
+        // Show splash if: not from splash AND (no previous splash OR more than 30 seconds ago)
+        if (!fromSplash && (!lastSplash || now - parseInt(lastSplash) > 30000)) {
+            localStorage.setItem('taskflow_last_splash', now.toString());
+            window.location.href = 'splash.html';
+            return;
+        }
     }
     
     checkAuthentication() {

@@ -515,9 +515,45 @@ body {
     border-left: 4px solid #3b82f6;
 }
 
+.toast.undo-toast {
+    border-left: 4px solid #f59e0b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.undo-btn {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    padding: 8px 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.undo-btn:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+    transform: translateY(-1px);
+}
+
 @keyframes slideIn {
     to {
         transform: translateX(0);
+    }
+}
+
+@keyframes slideOut {
+    to {
+        transform: translateX(100%);
+        opacity: 0;
     }
 }
 
@@ -602,5 +638,15 @@ body {
     .message, .toast {
         min-width: auto;
         width: calc(100vw - 40px);
+    }
+    
+    .toast.undo-toast {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .undo-btn {
+        align-self: flex-end;
     }
 }

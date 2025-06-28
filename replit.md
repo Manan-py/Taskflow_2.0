@@ -87,4 +87,4 @@ Preferred communication style: Simple, everyday language.
 
 Changelog:
 - June 28, 2025. Initial setup
-- June 28, 2025. Added delete functionality to all task sections with confirmation dialog and red styling
+- June 28, 2025. Added delete functionality to all task sections with undo feature - replaced confirmation dialog with 5-second undo toast notification

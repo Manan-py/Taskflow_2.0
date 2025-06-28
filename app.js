@@ -289,17 +289,15 @@ class TaskFlowApp {
     }
     
     deleteTask(taskId, fromStage) {
-        // Confirm deletion
-        if (!confirm('Are you sure you want to delete this task? This action cannot be undone.')) {
-            return;
-        }
-        
         // Find task
         const taskIndex = this.tasks[fromStage].findIndex(task => task.id === taskId);
         if (taskIndex === -1) {
             this.showToast('Task not found', 'error');
             return;
         }
+        
+        // Get the task before removing it
+        const deletedTask = this.tasks[fromStage][taskIndex];
         
         // Remove task
         this.tasks[fromStage].splice(taskIndex, 1);
@@ -309,7 +307,67 @@ class TaskFlowApp {
         this.renderTasks();
         this.updateCounters();
         
-        this.showToast('Task deleted successfully');
+        // Show undo toast
+        this.showUndoToast(deletedTask, fromStage);
+    }
+    
+    showUndoToast(deletedTask, fromStage) {
+        // Create undo toast
+        const toast = document.createElement('div');
+        toast.className = 'toast undo-toast';
+        
+        const message = document.createElement('span');
+        const truncatedTitle = deletedTask.title.length > 30 
+            ? deletedTask.title.substring(0, 30) + '...' 
+            : deletedTask.title;
+        message.textContent = `Task "${truncatedTitle}" deleted`;
+        
+        const undoButton = document.createElement('button');
+        undoButton.className = 'undo-btn';
+        undoButton.innerHTML = '<i class="fas fa-undo"></i> Undo';
+        undoButton.onclick = () => {
+            this.undoDelete(deletedTask, fromStage);
+            this.removeToast(toast);
+        };
+        
+        toast.appendChild(message);
+        toast.appendChild(undoButton);
+        this.toastContainer.appendChild(toast);
+        
+        // Auto-remove after 5 seconds
+        const timeoutId = setTimeout(() => {
+            this.removeToast(toast);
+        }, 5000);
+        
+        // Store timeout ID to clear it if undo is clicked
+        toast.timeoutId = timeoutId;
+    }
+    
+    undoDelete(deletedTask, originalStage) {
+        // Restore the task to its original stage
+        this.tasks[originalStage].push(deletedTask);
+        
+        // Save and re-render
+        this.saveTasks();
+        this.renderTasks();
+        this.updateCounters();
+        
+        this.showToast('Task restored successfully');
+    }
+    
+    removeToast(toast) {
+        if (toast.timeoutId) {
+            clearTimeout(toast.timeoutId);
+        }
+        
+        if (toast.parentNode) {
+            toast.style.animation = 'slideOut 0.3s ease forwards';
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 300);
+        }
     }
     
     renderTasks() {

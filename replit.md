@@ -8,15 +8,18 @@ TaskFlow is a client-side todo application built with vanilla HTML, CSS, and Jav
 
 ### Frontend Architecture
 - **Technology Stack**: Vanilla HTML5, CSS3, JavaScript (ES6+)
-- **Architecture Pattern**: Single Page Application (SPA) with multiple HTML pages
+- **Architecture Pattern**: Pure client-side application with multiple HTML pages
 - **State Management**: JavaScript classes with local state and localStorage persistence
-- **Styling**: Custom CSS with gradient themes, FontAwesome icons, and responsive design
+- **Styling**: Custom CSS with gradient themes, FontAwesome icons, smooth animations, and responsive design
+- **No Server Required**: Runs directly in browser, can be served as static files
 
 ### Key Design Decisions
-- **Client-side only**: No backend required, making deployment simple and reducing infrastructure needs
+- **Pure client-side**: Zero backend dependencies, runs in any modern browser
+- **Static file deployment**: Can be hosted on any static hosting service (GitHub Pages, Netlify, etc.)
 - **Local Storage**: Chosen for data persistence to avoid database complexity while maintaining user data between sessions
 - **Class-based JavaScript**: Provides better code organization and encapsulation compared to procedural approach
 - **Age verification**: Implements basic compliance for applications requiring minimum age requirements
+- **Smooth animations**: Enhanced user experience with CSS transitions and JavaScript-driven animations
 
 ## Key Components
 

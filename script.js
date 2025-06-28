@@ -13,6 +13,11 @@
         window.location.href = 'splash.html';
         return;
     }
+    
+    // If we reach here, show the content
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('show-content');
+    });
 })();
 
 class AgeVerification {

@@ -288,6 +288,30 @@ class TaskFlowApp {
         this.showToast(message);
     }
     
+    deleteTask(taskId, fromStage) {
+        // Confirm deletion
+        if (!confirm('Are you sure you want to delete this task? This action cannot be undone.')) {
+            return;
+        }
+        
+        // Find task
+        const taskIndex = this.tasks[fromStage].findIndex(task => task.id === taskId);
+        if (taskIndex === -1) {
+            this.showToast('Task not found', 'error');
+            return;
+        }
+        
+        // Remove task
+        this.tasks[fromStage].splice(taskIndex, 1);
+        
+        // Save and re-render
+        this.saveTasks();
+        this.renderTasks();
+        this.updateCounters();
+        
+        this.showToast('Task deleted successfully');
+    }
+    
     renderTasks() {
         const currentTasks = this.tasks[this.currentStage];
         
@@ -346,6 +370,10 @@ class TaskFlowApp {
                     <i class="fas fa-archive"></i>
                     Archive
                 </button>
+                <button class="task-btn btn-delete" data-task-id="${task.id}" data-action="delete">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                </button>
             `;
         } else if (this.currentStage === 'completed') {
             actionsHTML = `
@@ -353,10 +381,21 @@ class TaskFlowApp {
                     <i class="fas fa-archive"></i>
                     Archive
                 </button>
+                <button class="task-btn btn-delete" data-task-id="${task.id}" data-action="delete">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                </button>
             `;
         } else if (this.currentStage === 'archived') {
-            // Archived tasks only show status
-            actionsHTML = `<span class="task-status">Archived</span>`;
+            actionsHTML = `
+                <div class="archived-actions">
+                    <span class="task-status">Archived</span>
+                    <button class="task-btn btn-delete" data-task-id="${task.id}" data-action="delete">
+                        <i class="fas fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            `;
         }
         
         return `
@@ -390,6 +429,8 @@ class TaskFlowApp {
                     this.moveTask(taskId, 'todo', 'completed');
                 } else if (action === 'archive') {
                     this.moveTask(taskId, this.currentStage, 'archived');
+                } else if (action === 'delete') {
+                    this.deleteTask(taskId, this.currentStage);
                 }
             });
         });

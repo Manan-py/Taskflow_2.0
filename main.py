@@ -20,7 +20,7 @@ def create_app():
         def __call__(self, environ, start_response):
             path = environ['PATH_INFO'].lstrip('/')
             if not path:
-                path = 'index.html'
+                path = 'splash.html'
             
             file_path = os.path.join(self.directory, path)
             

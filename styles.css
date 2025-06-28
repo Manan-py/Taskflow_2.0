@@ -11,10 +11,15 @@ html {
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    background: linear-gradient(135deg, #1a1d3a 0%, #2d3561 50%, #3d4980 100%);
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 119, 255, 0.2) 0%, transparent 50%),
+        linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
     min-height: 100vh;
     color: #ffffff;
     line-height: 1.6;
+    background-attachment: fixed;
 }
 
 /* Landing Page Styles */
@@ -24,12 +29,34 @@ body {
     justify-content: center;
     min-height: 100vh;
     padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.landing-page::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 25% 25%, rgba(120, 119, 198, 0.15) 0%, transparent 40%),
+        radial-gradient(circle at 75% 75%, rgba(255, 119, 198, 0.15) 0%, transparent 40%);
+    animation: backgroundPulse 8s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
 }
 
 .container {
     max-width: 500px;
     width: 100%;
     text-align: center;
+    position: relative;
+    z-index: 10;
 }
 
 .header {
@@ -41,20 +68,53 @@ body {
 }
 
 .shield-icon {
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 20px;
-    box-shadow: 0 8px 32px rgba(99, 102, 241, 0.3);
+    box-shadow: 
+        0 8px 32px rgba(99, 102, 241, 0.4),
+        0 0 50px rgba(139, 92, 246, 0.3),
+        0 0 80px rgba(236, 72, 153, 0.2);
+    position: relative;
+    animation: logoFloat 3s ease-in-out infinite;
+}
+
+.shield-icon::before {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border: 2px solid transparent;
+    border-top: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    animation: logoRotate 2s linear infinite;
+}
+
+@keyframes logoFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+}
+
+@keyframes logoRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }
 
 .shield-icon i {
-    font-size: 24px;
+    font-size: 32px;
     color: white;
+    z-index: 10;
+    animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
 }
 
 .logo h1 {
@@ -188,13 +248,41 @@ body {
 
 /* App Page Styles */
 .app-page {
-    background: linear-gradient(135deg, #1a1d3a 0%, #2d3561 100%);
+    background: 
+        radial-gradient(circle at 15% 15%, rgba(120, 119, 198, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 85% 85%, rgba(255, 119, 198, 0.2) 0%, transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(120, 119, 255, 0.1) 0%, transparent 50%),
+        linear-gradient(135deg, #0f0f23 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+    background-attachment: fixed;
+    position: relative;
+}
+
+.app-page::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 30% 70%, rgba(120, 119, 198, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(255, 119, 198, 0.05) 0%, transparent 50%);
+    animation: backgroundFloat 10s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes backgroundFloat {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
 }
 
 .app-container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    position: relative;
+    z-index: 10;
 }
 
 .app-header {
@@ -264,10 +352,15 @@ body {
     display: flex;
     gap: 2px;
     margin-bottom: 30px;
-    background: rgba(30, 41, 59, 0.8);
+    background: rgba(30, 41, 59, 0.9);
     padding: 4px;
     border-radius: 8px;
     border: 1px solid rgba(51, 65, 85, 0.6);
+    backdrop-filter: blur(10px);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .stage-tab {
@@ -373,20 +466,42 @@ body {
 }
 
 .task-item {
-    background: rgba(30, 41, 59, 0.8);
+    background: rgba(30, 41, 59, 0.9);
     border: 1px solid rgba(51, 65, 85, 0.6);
-    border-radius: 12px;
-    padding: 20px;
+    border-radius: 16px;
+    padding: 24px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     animation: fadeInUp 0.5s ease-out;
     transform: translateY(0);
     opacity: 1;
+    backdrop-filter: blur(10px);
+    position: relative;
+    overflow: hidden;
+}
+
+.task-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(139, 92, 246, 0.05) 50%, rgba(236, 72, 153, 0.05) 100%);
+    border-radius: 16px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.task-item:hover::before {
+    opacity: 1;
 }
 
 .task-item:hover {
-    border-color: rgba(71, 85, 105, 0.8);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    border-color: rgba(99, 102, 241, 0.4);
+    transform: translateY(-3px);
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.2),
+        0 0 20px rgba(99, 102, 241, 0.1);
 }
 
 /* Fade in animation for new tasks */
@@ -422,6 +537,8 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     gap: 20px;
+    position: relative;
+    z-index: 10;
 }
 
 .task-info {
@@ -429,17 +546,21 @@ body {
 }
 
 .task-title {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #f1f5f9;
     margin-bottom: 8px;
     line-height: 1.5;
+    font-weight: 500;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .task-meta {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 16px;
+    margin-top: 18px;
+    position: relative;
+    z-index: 10;
 }
 
 .task-actions {

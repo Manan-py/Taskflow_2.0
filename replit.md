@@ -93,3 +93,7 @@ Changelog:
 - June 28, 2025. Added delete functionality to all task sections with undo feature - replaced confirmation dialog with 5-second undo toast notification
 - June 28, 2025. Added unarchive button to move tasks from archived back to todo section
 - June 28, 2025. Implemented comprehensive smooth animations and transitions including: task entrance/exit animations, button hover effects with shadows, stage switching transitions, ripple effects on button clicks, and staggered section loading animations
+- June 28, 2025. Enhanced unarchive functionality to restore tasks to their previous stage (todo or completed) instead of always going to todo
+- June 28, 2025. Made task stage navigation sticky for better UX while scrolling
+- June 28, 2025. Created animated splash screen with floating particles and loading animation that displays for 2.5 seconds before redirecting
+- June 28, 2025. Redesigned entire visual theme with dynamic gradient backgrounds, floating animations, enhanced logos, improved task cards with backdrop blur effects, and modern glass-morphism styling

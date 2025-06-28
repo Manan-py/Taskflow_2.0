@@ -274,6 +274,12 @@ class TaskFlowApp {
         
         // Get task and update it
         const task = this.tasks[fromStage][taskIndex];
+        
+        // Store previous stage when archiving for unarchive functionality
+        if (toStage === 'archived') {
+            task.previousStage = fromStage;
+        }
+        
         task.stage = toStage;
         task.lastModified = new Date().toISOString();
         
@@ -297,6 +303,32 @@ class TaskFlowApp {
         }
         
         this.showToast(message);
+    }
+    
+    unarchiveTask(taskId) {
+        // Find task in archived
+        const taskIndex = this.tasks.archived.findIndex(task => task.id === taskId);
+        if (taskIndex === -1) {
+            this.showToast('Task not found', 'error');
+            return;
+        }
+        
+        const task = this.tasks.archived[taskIndex];
+        const targetStage = task.previousStage || 'todo'; // Default to todo if no previous stage
+        
+        // Move task back to its previous stage
+        task.stage = targetStage;
+        task.lastModified = new Date().toISOString();
+        
+        this.tasks.archived.splice(taskIndex, 1);
+        this.tasks[targetStage].push(task);
+        
+        // Save and re-render
+        this.saveTasks();
+        this.renderTasks();
+        this.updateCounters();
+        
+        this.showToast(`Task restored to ${targetStage === 'todo' ? 'Todo' : 'Completed'}`);
     }
     
     deleteTask(taskId, fromStage) {
@@ -518,7 +550,7 @@ class TaskFlowApp {
                 } else if (action === 'archive') {
                     this.moveTask(taskId, this.currentStage, 'archived');
                 } else if (action === 'unarchive') {
-                    this.moveTask(taskId, 'archived', 'todo');
+                    this.unarchiveTask(taskId);
                 } else if (action === 'delete') {
                     this.deleteTask(taskId, this.currentStage);
                 }

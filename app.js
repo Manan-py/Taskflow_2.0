@@ -217,8 +217,19 @@ class TaskFlowApp {
             this.archivedTab.classList.add('active');
         }
         
-        // Re-render tasks
-        this.renderTasks();
+        // Animate stage transition
+        this.taskList.style.opacity = '0';
+        this.taskList.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+            // Re-render tasks
+            this.renderTasks();
+            
+            // Animate in
+            this.taskList.style.transition = 'all 0.3s ease';
+            this.taskList.style.opacity = '1';
+            this.taskList.style.transform = 'translateY(0)';
+        }, 150);
     }
     
     handleTaskSubmit(e) {
@@ -299,16 +310,32 @@ class TaskFlowApp {
         // Get the task before removing it
         const deletedTask = this.tasks[fromStage][taskIndex];
         
-        // Remove task
-        this.tasks[fromStage].splice(taskIndex, 1);
-        
-        // Save and re-render
-        this.saveTasks();
-        this.renderTasks();
-        this.updateCounters();
-        
-        // Show undo toast
-        this.showUndoToast(deletedTask, fromStage);
+        // Find the task element and animate it out
+        const taskElement = document.querySelector(`[data-task-id="${taskId}"]`)?.closest('.task-item');
+        if (taskElement) {
+            taskElement.style.animation = 'fadeOutDown 0.4s ease-in-out forwards';
+            
+            // Wait for animation to complete before removing from data
+            setTimeout(() => {
+                // Remove task
+                this.tasks[fromStage].splice(taskIndex, 1);
+                
+                // Save and re-render
+                this.saveTasks();
+                this.renderTasks();
+                this.updateCounters();
+                
+                // Show undo toast
+                this.showUndoToast(deletedTask, fromStage);
+            }, 400);
+        } else {
+            // Fallback if element not found
+            this.tasks[fromStage].splice(taskIndex, 1);
+            this.saveTasks();
+            this.renderTasks();
+            this.updateCounters();
+            this.showUndoToast(deletedTask, fromStage);
+        }
     }
     
     showUndoToast(deletedTask, fromStage) {
@@ -447,7 +474,10 @@ class TaskFlowApp {
         } else if (this.currentStage === 'archived') {
             actionsHTML = `
                 <div class="archived-actions">
-                    <span class="task-status">Archived</span>
+                    <button class="task-btn btn-unarchive" data-task-id="${task.id}" data-action="unarchive">
+                        <i class="fas fa-undo"></i>
+                        Unarchive
+                    </button>
                     <button class="task-btn btn-delete" data-task-id="${task.id}" data-action="delete">
                         <i class="fas fa-trash"></i>
                         Delete
@@ -487,6 +517,8 @@ class TaskFlowApp {
                     this.moveTask(taskId, 'todo', 'completed');
                 } else if (action === 'archive') {
                     this.moveTask(taskId, this.currentStage, 'archived');
+                } else if (action === 'unarchive') {
+                    this.moveTask(taskId, 'archived', 'todo');
                 } else if (action === 'delete') {
                     this.deleteTask(taskId, this.currentStage);
                 }

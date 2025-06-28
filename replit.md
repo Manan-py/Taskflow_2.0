@@ -88,3 +88,5 @@ Preferred communication style: Simple, everyday language.
 Changelog:
 - June 28, 2025. Initial setup
 - June 28, 2025. Added delete functionality to all task sections with undo feature - replaced confirmation dialog with 5-second undo toast notification
+- June 28, 2025. Added unarchive button to move tasks from archived back to todo section
+- June 28, 2025. Implemented comprehensive smooth animations and transitions including: task entrance/exit animations, button hover effects with shadows, stage switching transitions, ripple effects on button clicks, and staggered section loading animations

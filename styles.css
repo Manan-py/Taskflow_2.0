@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+/* Global smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
     background: linear-gradient(135deg, #1a1d3a 0%, #2d3561 50%, #3d4980 100%);
@@ -273,18 +278,38 @@ body {
     border-radius: 6px;
     color: #94a3b8;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.stage-tab::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.6s ease;
+}
+
+.stage-tab:hover::before {
+    left: 100%;
 }
 
 .stage-tab.active {
     background: #ffffff;
     color: #1e293b;
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 }
 
 .stage-tab:not(.active):hover {
     background: rgba(51, 65, 85, 0.5);
     color: #e2e8f0;
+    transform: translateY(-1px);
 }
 
 .task-input-section {
@@ -308,12 +333,16 @@ body {
     border-radius: 8px;
     color: #ffffff;
     font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: scale(1);
 }
 
 .task-form input:focus {
     outline: none;
     border-color: #3b82f6;
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    transform: scale(1.01);
+    background: rgba(71, 85, 105, 0.9);
 }
 
 .task-form input::placeholder {
@@ -333,7 +362,8 @@ body {
 
 .submit-btn:hover {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.3);
 }
 
 .task-list {
@@ -347,12 +377,44 @@ body {
     border: 1px solid rgba(51, 65, 85, 0.6);
     border-radius: 12px;
     padding: 20px;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.5s ease-out;
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .task-item:hover {
     border-color: rgba(71, 85, 105, 0.8);
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Fade in animation for new tasks */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fade out animation for deleted tasks */
+@keyframes fadeOutDown {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+        max-height: 200px;
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-10px);
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+    }
 }
 
 .task-content {
@@ -392,10 +454,30 @@ body {
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     align-items: center;
     gap: 6px;
+    position: relative;
+    overflow: hidden;
+}
+
+.task-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.5s ease;
+}
+
+.task-btn:active::before {
+    width: 300px;
+    height: 300px;
 }
 
 .btn-complete {
@@ -405,6 +487,8 @@ body {
 
 .btn-complete:hover {
     background: linear-gradient(135deg, #059669, #047857);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 .btn-archive {
@@ -415,6 +499,8 @@ body {
 
 .btn-archive:hover {
     background: rgba(100, 116, 139, 0.8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(100, 116, 139, 0.3);
 }
 
 .btn-todo {
@@ -424,6 +510,8 @@ body {
 
 .btn-todo:hover {
     background: linear-gradient(135deg, #2563eb, #1d4ed8);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
 }
 
 .btn-delete {
@@ -433,6 +521,19 @@ body {
 
 .btn-delete:hover {
     background: linear-gradient(135deg, #dc2626, #b91c1c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.btn-unarchive {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    color: white;
+}
+
+.btn-unarchive:hover {
+    background: linear-gradient(135deg, #7c3aed, #6d28d9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
 }
 
 .archived-actions {
@@ -557,11 +658,53 @@ body {
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Task list smooth transitions */
+.task-list {
+    min-height: 200px;
+    transition: all 0.3s ease;
+}
+
+/* App sections entrance animations */
+.app-header {
+    animation: fadeIn 0.8s ease-out;
+}
+
+.task-stages {
+    animation: fadeIn 1s ease-out 0.2s both;
+}
+
+.task-input-section {
+    animation: fadeIn 1.2s ease-out 0.4s both;
+}
+
+/* Hover effects for interactive elements */
+.user-avatar:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .shield-icon {
+    transform: rotate(360deg);
+    transition: transform 0.6s ease;
+}
+
 /* Empty State */
 .empty-state {
     text-align: center;
     padding: 60px 20px;
     color: #94a3b8;
+    animation: fadeIn 0.6s ease-out;
 }
 
 .empty-state i {

@@ -239,6 +239,15 @@ class TaskFlowApp {
             this.archivedTab.classList.add('active');
         }
         
+        // Show/hide task input form - only show on todo stage
+        if (this.taskForm) {
+            if (stage === 'todo') {
+                this.taskForm.style.display = 'block';
+            } else {
+                this.taskForm.style.display = 'none';
+            }
+        }
+        
         // Animate stage transition
         this.taskList.style.opacity = '0';
         this.taskList.style.transform = 'translateY(10px)';

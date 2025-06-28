@@ -20,6 +20,60 @@
     });
 })();
 
+// Theme Management
+class ThemeManager {
+    constructor() {
+        this.currentTheme = localStorage.getItem('taskflow_theme') || 'dark';
+        this.init();
+    }
+    
+    init() {
+        this.applyTheme(this.currentTheme);
+        this.setupThemeToggle();
+    }
+    
+    setupThemeToggle() {
+        const themeToggle = document.getElementById('themeToggle');
+        if (!themeToggle) return;
+        
+        this.updateToggleIcon(themeToggle);
+        
+        themeToggle.addEventListener('click', () => {
+            this.toggleTheme();
+        });
+    }
+    
+    toggleTheme() {
+        this.currentTheme = this.currentTheme === 'dark' ? 'light' : 'dark';
+        this.applyTheme(this.currentTheme);
+        localStorage.setItem('taskflow_theme', this.currentTheme);
+        
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            this.updateToggleIcon(themeToggle);
+        }
+    }
+    
+    applyTheme(theme) {
+        if (theme === 'light') {
+            document.body.classList.add('light-theme');
+        } else {
+            document.body.classList.remove('light-theme');
+        }
+    }
+    
+    updateToggleIcon(toggle) {
+        // Remove existing mode classes
+        toggle.classList.remove('light-mode', 'dark-mode');
+        
+        if (this.currentTheme === 'light') {
+            toggle.classList.add('light-mode');
+        } else {
+            toggle.classList.add('dark-mode');
+        }
+    }
+}
+
 class AgeVerification {
     constructor() {
         this.form = document.getElementById('ageVerificationForm');
@@ -227,7 +281,8 @@ class AgeVerification {
     }
 }
 
-// Initialize age verification when DOM is loaded
+// Initialize age verification and theme manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new AgeVerification();
+    new ThemeManager();
 });
